@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 services:
   db:
     build: ./db
@@ -16,23 +16,25 @@ services:
       - my-network
     environment:
       - DBHOST=db
-    command:
-      ["./wait-for-it.sh", "-s", "db:3306", "--", "npm", "run", "start:prod"]
+    command: ["npm", "run", "start:prod"]
     depends_on:
-      - db
+      db:
+        condition: service_started
   client:
     build: ./client
     volumes:
       - /app
     ports:
       - "3000:3000"
-    command: ["./wait-for-it.sh", "-s", "server:8080", "--", "./start.sh"]
+    command: ["./start.sh"]
     networks:
       - my-network
     environment:
       - HOST=server
     depends_on:
-      - server
+      server:
+        condition: service_started
+
 networks:
   my-network:
     driver: bridge
