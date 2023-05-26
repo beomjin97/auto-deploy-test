@@ -25,10 +25,12 @@ services:
     volumes:
       - /app
     ports:
-      - "80:3000"
+      - "3000:3000"
     command: ["./wait-for-it.sh", "-s", "server:8080", "--", "./start.sh"]
     networks:
       - my-network
+    environment:
+      - HOST=server
     depends_on:
       - server
 networks:
