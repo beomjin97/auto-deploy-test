@@ -23,7 +23,7 @@ services:
     environment:
       - DBHOST=db
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://server:8080"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 10s
       timeout: 10s
       retries: 6
@@ -50,8 +50,8 @@ services:
       retries: 6
       start_period: 20s
     depends_on:
-      db:
-        condition: service_healthy
+      server:
+        condition: service_started
 
 networks:
   my-network:
