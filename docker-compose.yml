@@ -6,6 +6,12 @@ services:
       - "3306:3306"
     networks:
       - my-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://db:3306"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+      start_period: 40s
   server:
     build: ./server
     volumes:
@@ -16,24 +22,36 @@ services:
       - my-network
     environment:
       - DBHOST=db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://server:8080"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+      start_period: 20s
     command: ["npm", "run", "start:prod"]
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
   client:
     build: ./client
     volumes:
       - /app
     ports:
       - "3000:3000"
-    command: ["./start.sh"]
+    command: ["npm", "run", "deploy"]
     networks:
       - my-network
     environment:
       - HOST=server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://client:3000"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+      start_period: 20s
     depends_on:
-      server:
-        condition: service_started
+      db:
+        condition: service_healthy
 
 networks:
   my-network:
