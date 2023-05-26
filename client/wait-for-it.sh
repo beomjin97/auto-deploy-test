@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 WAITFORIT_cmdname=${0##*/}
 

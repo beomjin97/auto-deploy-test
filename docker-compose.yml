@@ -17,16 +17,7 @@ services:
     environment:
       - DBHOST=db
     command:
-      [
-        "sh",
-        "./wait-for-it.sh",
-        "-s",
-        "db:3306",
-        "--",
-        "npm",
-        "run",
-        "start:prod",
-      ]
+      ["./wait-for-it.sh", "-s", "db:3306", "--", "npm", "run", "start:prod"]
     depends_on:
       - db
   client:
