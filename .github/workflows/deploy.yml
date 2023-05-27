@@ -66,26 +66,31 @@ jobs:
           npm install
           npm run build
 
-      - name: Clear target directory
-        run: |
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "rm -rf /auto-deploy-test/client/.next/*"
-          ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "rm -rf /auto-deploy-test/server/dist/*"
+      - name: clear directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRODUCTION_SERVER_HOST }}
+          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
+          key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
+          script: |
+            rm -rf /auto-deploy-test/client/.next/*
+            rm -rf /auto-deploy-test/server/dist/*
 
       - name: Copy Server files to EC2
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ secrets.PRODUCTION_SERVER_HOST }}
+          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
+          key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           source: "/server/dist/"
           target: "/auto-deploy-test/server/dist/"
 
       - name: Copy Client files to EC2
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ secrets.PRODUCTION_SERVER_HOST }}
+          username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
+          key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           source: "/client/.next/"
           target: "/auto-deploy-test/client/.next/"
 
