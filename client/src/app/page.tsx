@@ -1,5 +1,5 @@
 async function getHello() {
-  const res = await fetch(`http://${process.env.HOST}:8080`);
+  const res = await fetch(`http://${process.env.HOST || "localhost"}:8080`);
   return res.json();
 }
 
