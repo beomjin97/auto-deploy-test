@@ -102,7 +102,7 @@ jobs:
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           script: |
             pm2 kill
-            cd /auto-deploy-test/server
+            cd /home/ubuntu/auto-deploy-test/server
             pm2 start --name server -- npm run start
             cd ../client
             pm2 start --name client -- npm run start
