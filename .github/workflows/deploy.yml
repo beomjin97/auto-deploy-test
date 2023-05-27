@@ -83,7 +83,7 @@ jobs:
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           source: "server/dist/"
-          target: "/auto-deploy-test/server/dist/"
+          target: "/home/ubuntu/auto-deploy-test/server/dist/"
 
       - name: Copy Client files to EC2
         uses: appleboy/scp-action@master
@@ -92,7 +92,7 @@ jobs:
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           source: "client/.next/"
-          target: "/auto-deploy-test/client/.next/"
+          target: "/home/ubuntu/auto-deploy-test/client/.next/"
 
       - name: Deploy to production server
         uses: appleboy/ssh-action@master
