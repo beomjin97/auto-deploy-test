@@ -82,7 +82,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_SERVER_HOST }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
-          source: "/server/dist/"
+          source: "server/dist/"
           target: "/auto-deploy-test/server/dist/"
 
       - name: Copy Client files to EC2
@@ -91,7 +91,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_SERVER_HOST }}
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
-          source: "/client/.next/"
+          source: "client/.next/"
           target: "/auto-deploy-test/client/.next/"
 
       - name: Deploy to production server
