@@ -50,7 +50,7 @@ jobs:
 
       - name: Build db Docker image
         run: |
-          cd /db
+          cd db
           sudo docker build -t db-mysql .
 
       - name: Run Docker container
