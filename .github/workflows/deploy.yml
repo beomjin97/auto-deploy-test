@@ -106,8 +106,8 @@ jobs:
             git pull origin master
             cd server
             npm install
-            pm2 start --name server -- npm run start
+            pm2 start --name server npm -- run start
             cd ../client
             npm install
-            pm2 start --name client -- npm run start
+            pm2 start --name client npm -- run start
             sudo service nginx restart
